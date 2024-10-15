@@ -1,4 +1,7 @@
 ﻿using Amazon.Runtime.Internal;
+using BuildingBlock.CQRS;
+using Catalog.API.Contract.Models;
+using Catalog.API.Provider.Database;
 using MediatR;
 using MongoDB.Bson;
 using System;
@@ -14,13 +17,35 @@ namespace Catalog.API.Provider.Services.Products.CreateProduct
         List<string> Category ,
         string Description,
         string ImageFile,
-        decimal Price): IRequest<CreateProductResult>;
+        decimal Price): ICommand<CreateProductResult>;
     public record CreateProductResult(ObjectId _id);
-    internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductResult>
+    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
-        public Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        private readonly ConnectionHelper connectionHelper;
+
+        public CreateProductCommandHandler(ConnectionHelper connectionHelper)
         {
-            throw new NotImplementedException();
+            this.connectionHelper = connectionHelper;
+        }
+
+        public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+        {
+            //using (var context = CatalogDbContext.Create(this.connectionHelper))
+            //{
+                Product product = new Product()
+                {
+                    Category = command.Category,
+                    ImageFile = command.ImageFile,
+                    Description = command.Description,
+                    Price = command.Price,
+                    Name = command.Name,
+                };
+
+            return new CreateProductResult(new ObjectId());
+                //context.Products.Add(product); 
+                //await context.SaveChangesAsync();   
+            //}
+
         }
     }
 }
