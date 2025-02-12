@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildingBlock.CQRS
-{
-    public interface ICommand: ICommand<Unit>
-    {
-        
-    }
-    public interface ICommand<out TResponse> : IRequest<TResponse>
-    {
+namespace BuildingBlock.CQRS;
 
-    }
+public interface ICommand : ICommand<Unit>
+{
+}
+
+public interface ICommand<out TResponse> : IRequest<TResponse>
+{
 }

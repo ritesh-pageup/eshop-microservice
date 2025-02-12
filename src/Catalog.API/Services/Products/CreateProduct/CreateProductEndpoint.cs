@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using MongoDB.Bson;
 
-namespace Catalog.API.Provider.Services.Products.CreateProduct
+namespace Catalog.API.Services.Products.CreateProduct
 {
     public record CreateProductRequest(string Name,
         List<string> Category,
@@ -15,12 +15,13 @@ namespace Catalog.API.Provider.Services.Products.CreateProduct
     {
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("products", async (CreateProductRequest request, ISender sender) =>
+            app.MapPost("product", async (CreateProductRequest request, ISender sender) =>
             {
                 var command = request.Adapt<CreateProductCommand>();
                 var result = sender.Send(command);
-                var response = result.Adapt<CreateProductResponse>();
-                return Results.Created($"/products/{response._id}", response);
+
+                var response = result.Result.Adapt<CreateProductResponse>();
+                return Results.Created($"/product/{response._id}", response);
             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)

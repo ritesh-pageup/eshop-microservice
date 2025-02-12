@@ -1,4 +1,6 @@
-﻿using MongoDB.Bson;
+﻿
+
+using MongoDB.Bson;
 
 namespace Catalog.API.Contract.Models
 {

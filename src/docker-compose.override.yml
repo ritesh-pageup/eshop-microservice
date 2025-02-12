@@ -1,0 +1,26 @@
+services:
+  catalogdb:
+    image: mongo
+    restart: always
+    ports:
+        - "5432:5432"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: riteshpageup
+      MONGO_INITDB_ROOT_PASSWORD: Pageup12345
+    volumes:
+        - mongo_catalog:/var/lib/mongo/data/
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - MongoDB__ConnectionString=mongodb+srv://riteshpageup:Pageup12345@ritesh.sl1ct3g.mongodb.net/?retryWrites=true&w=majority&appName=RItesh
+      - MongoDB__DatabaseName=CatalogService
+    depends_on:
+      - catalogdb
+    ports:
+      - "6000:8080"
+      - "6060:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
