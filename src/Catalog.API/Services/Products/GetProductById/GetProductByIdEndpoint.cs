@@ -17,7 +17,7 @@ namespace Catalog.API.Services.Products.GetProductById
                 return Results.Ok(product);
             })
             .WithName("GetProduct")
-            .Produces<ProductDto>()
+            .Produces<ProductDto>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Get Product!")
             .WithDescription("Get Product!");

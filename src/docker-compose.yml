@@ -1,13 +1,31 @@
 services:
   catalogdb:
     image: mongo
-
+  basketdb:
+    image: postgres
+  distributedcache:
+    image: redis
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Microservices/Basket/Basket.API/Dockerfile
+
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discountgrpc
+    build:
+      context: .
+      dockerfile: Microservices/Discount/Discount.Grpc/Dockerfile
+
 volumes:
     mongo_catalog:
+    postgres_basket:
+
+
 
