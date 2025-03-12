@@ -15,7 +15,7 @@ namespace BuildingBlock.Behaviors
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            logger.LogInformation("[START] Handle request={Request} - Response={Response} - Request Data={RequestData}", typeof(TRequest), typeof(TResponse), request);
+            logger.LogInformation("[START] Handle request={Request} - Response={Response} - Request Data={  }", typeof(TRequest), typeof(TResponse), request);
 
             var timer = new Stopwatch();
             timer.Start();

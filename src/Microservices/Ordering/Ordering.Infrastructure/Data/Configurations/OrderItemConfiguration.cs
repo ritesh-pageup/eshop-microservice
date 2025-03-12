@@ -17,6 +17,8 @@ namespace Ordering.Infrastructure.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasConversion(orderItemId => orderItemId.Value, dbId => OrderItemId.Of(dbId));
             builder.Property(x => x.Price).IsRequired();
+            builder.Property(x => x.Quantity).IsRequired();
+            builder.HasOne<Product>().WithMany().HasForeignKey(x => x.OrderProductId);
         }
     }
 }
